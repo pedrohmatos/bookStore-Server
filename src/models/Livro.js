@@ -7,7 +7,7 @@ const livroSchema = new mongoose.Schema({
     editora: { type: mongoose.Schema.Types.String },
     preco: { type: mongoose.Schema.Types.Number },
     paginas: { type: mongoose.Schema.Types.Number },
-    autores: autorSchema
+    autor: autorSchema
 }, { versionKey: false });
 
 const Livros = mongoose.model("livros", livroSchema);
