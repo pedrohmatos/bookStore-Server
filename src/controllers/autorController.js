@@ -19,7 +19,7 @@ class AutorController {
             if (autorEncontrado !== null) {
                 res.status(200).json(autorEncontrado);
             } else {
-                res.status(404).json({ message: "Autor não localizado" });
+                res.status(204).json({ message: "Autor não localizado" });
             }
 
         } catch (erro) {
@@ -39,8 +39,14 @@ class AutorController {
     static async atualizarAutor(req, res, next) {
         try {
             const id = req.params.id;
-            await Autores.findByIdAndUpdate(id, req.body);
-            res.status(200).json({ message: "autor atualizado" });
+            const atualizandoAutor = await Autores.findByIdAndUpdate(id, req.body);
+
+            if (atualizandoAutor !== null) {
+                res.status(200).json({ message: "Autor atualizado", mudanca: atualizandoAutor });
+            } else {
+                res.status(404).json({ message: "O autor a ser atualizado não foi encontrado" });
+            }
+
         } catch (erro) {
             next(erro);
         }
@@ -49,8 +55,14 @@ class AutorController {
     static async deletarAutor(req, res, next) {
         try {
             const id = req.params.id;
-            await Autores.findByIdAndDelete(id);
-            res.status(200).json({ message: "O autor foi deletado com sucesso" });
+            const deletandoAutor = await Autores.findByIdAndDelete(id);
+
+            if (deletandoAutor !== null) {
+                res.status(200).json({ message: "O autor foi deletado com sucesso", mudanca: deletandoAutor });
+            } else {
+                res.status(404).json({ message: "O autor a ser deletado não foi encontrado" });
+            }
+
         } catch (erro) {
             next(erro);
         }

@@ -2,6 +2,7 @@ import express from "express";
 import conectaNaDatabase from "./config/dbConnect.js";
 import routes from "./routes/index.js";
 import manipuladorDeErros from "./middleware/manipularErros.js";
+import rotasNaoEncontradas from "./middleware/notFound.js";
 
 const conectando = await conectaNaDatabase();
 const app = express();
@@ -20,9 +21,6 @@ routes(app);
 
 app.use(manipuladorDeErros);
 
-// eslint-disable-next-line no-unused-vars
-app.use((req, res, next) => {
-    res.status(404).json({ message: "Página não encontrada." });
-});
+app.use(rotasNaoEncontradas);
 
 export default app;
