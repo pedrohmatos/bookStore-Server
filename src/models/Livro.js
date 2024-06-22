@@ -12,7 +12,11 @@ const livroSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Number,
         required: [true, "O preço do livro é obrigatório"]
     },
-    paginas: { type: mongoose.Schema.Types.Number },
+    paginas: {
+        type: mongoose.Schema.Types.Number,
+        min: [10, "O número de páginas deve estar entre 10 e 5000"],
+        max: [5000, "O número de páginas deve estar entre 10 e 5000"]
+    },
     autor: autorSchema
 }, { versionKey: false });
 
